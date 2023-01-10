@@ -1,6 +1,4 @@
-import chalk from "chalk";
 import { Command } from "commander";
-import { createSpinner } from "nanospinner";
 import { DIContainer } from "../../../core/di-container";
 import { DisableUserAccount } from "../../../domain/services/DisableUserAccount.service";
 
@@ -15,20 +13,7 @@ export class DisabledAccountCommand {
       .action(async (str) => {
         const { userPoolId, username, region } = str;
         const disableAccountService = DIContainer.resolve(DisableUserAccount);
-        const spinner = createSpinner(
-          chalk.white("Enabling account for user " + username)
-        ).start();
-
-        await disableAccountService
-          .execute(region, userPoolId, username)
-          .then(() => {
-            const successLogText = chalk.green(" [SUCCESS] ");
-            const usernameLogText = chalk.cyan(username);
-            const message = chalk.white(
-              `${successLogText} The account of ${usernameLogText} has been disabled!`
-            );
-            spinner.success({ text: message }).clear();
-          });
+        await disableAccountService.execute(region, userPoolId, username);
       });
   }
 }
