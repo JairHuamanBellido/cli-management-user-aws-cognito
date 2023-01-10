@@ -16,4 +16,8 @@ export class Logger {
   public success(message: string) {
     this._spinner.success({ text: message }).clear();
   }
+
+  public error(message: string) {
+    this._spinner.error({ text: chalk.bgRed.white(message) }).clear();
+  }
 }

@@ -1,15 +1,16 @@
 import { inject, injectable } from "inversify";
 import { Logger } from "../../core/common/logger/Logger";
+import { DITokens } from "../../core/di-container/di-tokens";
 import { UserDomain } from "../../domain/entities/user";
 import { ICognitoBaseParams } from "../../domain/interface/ICognitoBaseParams.interface";
 import { IManagementAccount } from "../../domain/interface/IManagementAccount.interface";
-import { CognitoPoolRepository } from "../abstract/CognitoPoolRepository";
 import { AWSCognitoAdapter } from "../adapter/AWSCognito.adapter";
-import { CognitoUserMapper } from "../mapper/AWSCognitoUser.mapper";
+import { IAWSCognitoPoolRepository } from "../interface/IAWSCognitoPoolRepository";
+import { CognitoUserMapper } from "../mapper/CognitoUserMapper";
 
 @injectable()
-export class CognitoPoolRepositoryImpl implements CognitoPoolRepository {
-  constructor(@inject(Logger) private readonly _logger: Logger) {}
+export class CognitoPoolRepository implements IAWSCognitoPoolRepository {
+  constructor(@inject(DITokens.Logger) private readonly _logger: Logger) {}
 
   /**
    * Enable account status of Cognito User
@@ -27,9 +28,7 @@ export class CognitoPoolRepositoryImpl implements CognitoPoolRepository {
       .adminEnableUser({ Username: usernameId, UserPoolId: userPoolId })
       .promise()
       .then(() => {
-        this._logger.success(
-          ` [SUCCESS] The account of ${usernameId} has been enabled!`
-        );
+        this._logger.success(`The account of ${usernameId} has been enabled!`);
       });
   }
 
@@ -50,9 +49,7 @@ export class CognitoPoolRepositoryImpl implements CognitoPoolRepository {
       .adminDisableUser({ Username: usernameId, UserPoolId: userPoolId })
       .promise()
       .then(() => {
-        this._logger.success(
-          ` [SUCCESS] The account of ${usernameId} has been disabled!`
-        );
+        this._logger.success(`The account of ${usernameId} has been disabled!`);
       });
   }
 

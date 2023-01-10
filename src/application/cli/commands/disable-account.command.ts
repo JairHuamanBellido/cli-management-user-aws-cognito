@@ -1,6 +1,6 @@
 import { Command } from "commander";
-import { DIContainer } from "../../../core/di-container";
-import { DisableUserAccount } from "../../../domain/services/DisableUserAccount.service";
+import { DIContainer } from "../../../core/di-container/di-container";
+import { DisableUserAccountUseCase } from "../../../domain/useCases/DisableUserAccountUseCase";
 
 export class DisabledAccountCommand {
   public static async build(cli: Command) {
@@ -11,9 +11,11 @@ export class DisabledAccountCommand {
       .requiredOption("-up, --userPoolId <required>", "User pool id")
       .requiredOption("--region <string>", "AWS Region", "us-east-1")
       .action(async (str) => {
-        const { userPoolId, username, region } = str;
-        const disableAccountService = DIContainer.resolve(DisableUserAccount);
-        await disableAccountService.execute(region, userPoolId, username);
+        const { userPoolId, username: usernameId, region } = str;
+        const disableAccountUseCase = DIContainer.resolve(
+          DisableUserAccountUseCase
+        );
+        await disableAccountUseCase.execute({ region, userPoolId, usernameId });
       });
   }
 }

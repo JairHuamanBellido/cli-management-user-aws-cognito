@@ -2,8 +2,8 @@ import { CognitoIdentityServiceProvider } from "aws-sdk";
 import {
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY_ID,
-} from "../env/environment";
-import { AWSCognitoAdapterServiceProviderParams } from "./interface/IAWSCognitoAdapter.interface";
+} from "../../core/env/environment";
+import { AWSCognitoAdapterServiceProviderParams } from "../interface/IAWSCognitoAdapter.interface";
 
 export class AWSCognitoAdapter {
   public static serviceProvider({
