@@ -8,4 +8,7 @@ export class DITokens {
   );
 
   public static readonly Logger: unique symbol = Symbol("Logger");
+
+  public static readonly SessionRepository: unique symbol =
+    Symbol("SessionRepository");
 }

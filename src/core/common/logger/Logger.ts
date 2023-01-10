@@ -20,4 +20,8 @@ export class Logger {
   public error(message: string) {
     this._spinner.error({ text: chalk.bgRed.white(message) }).clear();
   }
+
+  public warn(message: string) {
+    this._spinner.warn({ text: message }).clear();
+  }
 }
