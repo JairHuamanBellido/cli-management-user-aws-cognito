@@ -29,11 +29,11 @@ export class DisableUserAccountUseCase implements UseCase<Params, void> {
         userPoolId,
       });
 
-      const { connectionId } = await this._sessionRepository.findByUserId(
-        usernameId
-      );
-        
-      await this._websocket.forceDisconnectUserSession(connectionId);
+      const res = await this._sessionRepository.findByUserId(usernameId);
+
+      if (!!res) {
+        await this._websocket.forceDisconnectUserSession(res.connectionId);
+      }
     } catch (error) {
       console.error(error);
     }
