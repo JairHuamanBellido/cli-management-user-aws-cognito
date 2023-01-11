@@ -23,7 +23,7 @@ export class CognitoPoolRepository implements IAWSCognitoPoolRepository {
   }: IManagementAccount): Promise<void> {
     const cognito = await AWSCognitoAdapter.serviceProvider({ region });
 
-    this._logger.loading("Enabling account for user " + usernameId);
+    this._logger.info("Enabling account for user " + usernameId);
     await cognito
       .adminEnableUser({ Username: usernameId, UserPoolId: userPoolId })
       .promise()
@@ -43,7 +43,7 @@ export class CognitoPoolRepository implements IAWSCognitoPoolRepository {
   }: IManagementAccount): Promise<void> {
     const cognito = await AWSCognitoAdapter.serviceProvider({ region });
 
-    this._logger.loading("Disabling account for user " + usernameId);
+    this._logger.info("Disabling account for user " + usernameId);
 
     await cognito
       .adminDisableUser({ Username: usernameId, UserPoolId: userPoolId })
@@ -65,7 +65,7 @@ export class CognitoPoolRepository implements IAWSCognitoPoolRepository {
   }: ICognitoBaseParams): Promise<UserDomain[]> {
     const cognito = await AWSCognitoAdapter.serviceProvider({ region });
 
-    this._logger.loading("Fetching users");
+    this._logger.info("Fetching users");
     const result = await (
       await cognito
         .listUsers({ UserPoolId: userPoolId })

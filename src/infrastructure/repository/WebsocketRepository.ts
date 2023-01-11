@@ -16,11 +16,16 @@ export class WebsocketRepository implements IWebsocketRepository {
   }
 
   async forceDisconnectUserSession(connectionId: string): Promise<void> {
-    this._logger.loading("Trying to disconnect user session...");
+    this._logger.info("Trying to disconnect user session...");
     await this._websocket
       .postToConnection({
         ConnectionId: connectionId,
-        Data: Buffer.from("pediste pe batedía"),
+        Data: Buffer.from(
+          JSON.stringify({
+            action: "ACCOUNT BLOCKET",
+            message: "You are has been blocked",
+          })
+        ),
       })
       .promise()
       .then(() => {
